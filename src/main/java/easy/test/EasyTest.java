@@ -61,7 +61,7 @@ public class EasyTest {
 
     public static void main(String[] args) {
         // syntax: java easy.test.EasyTest fileName (startNo) (endNo)
-        // 2
+        // 2 3
         String testFilePath = "C:\\code\\easy-test\\test2.xlsx";
         int start = 0;
         int end = Integer.MAX_VALUE;
