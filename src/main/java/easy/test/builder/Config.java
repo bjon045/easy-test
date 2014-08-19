@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.usermodel.Workbook;
 
-import easy.test.util.WorkbookUtils;
+import easy.test.source.TestDataSource;
 
 public class Config {
 
@@ -22,15 +21,15 @@ public class Config {
 
     private static String jiraPass;
 
-    public static void loadConfig(Workbook workbook) {
-        String[][] configData = WorkbookUtils.getDataSet("config", workbook);
+    public static void loadConfig(TestDataSource testDataSource) {
+        String[][] configData = testDataSource.getDataSet("config");
         for (int i = 0; i < configData.length; i++) {
             KEY_VALUE_PAIRS.put(configData[i][0], configData[i][1]);
         }
 
-        browsers = WorkbookUtils.getDataSet("browsers", workbook)[0];
+        browsers = testDataSource.getDataSet("browsers")[0];
 
-        String[][] jiraDataset = WorkbookUtils.getDataSet("jira", workbook);
+        String[][] jiraDataset = testDataSource.getDataSet("jira");
         String jiraUrl = jiraDataset[0][0];
         if (StringUtils.isNotBlank(jiraUrl)) {
             try {

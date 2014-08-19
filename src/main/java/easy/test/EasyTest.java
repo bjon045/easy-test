@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -15,24 +14,27 @@ import easy.test.builder.Config;
 import easy.test.builder.TestBuilder;
 import easy.test.results.TestResults;
 import easy.test.run.TestRun;
-import easy.test.util.WorkbookUtils;
+import easy.test.source.TestDataSource;
+import easy.test.source.confluence.ConfluenceDataSource;
 
 public class EasyTest {
 
-    private Workbook workbook;
+    private TestDataSource testDataSource;
 
     public EasyTest(String testFilePath) {
         File workbookFile = new File(testFilePath);
-        workbook = WorkbookUtils.load(workbookFile);
+        testDataSource = new ConfluenceDataSource();
+
+        // testDataSource = new WorkbookTestDataSource(WorkbookUtils.load(workbookFile));
     }
 
     public void start(int start, int end) {
         // load configuration
-        Config.loadConfig(workbook);
+        Config.loadConfig(testDataSource);
 
         // build test runs
         TestBuilder testBuilder = new TestBuilder();
-        List<TestRun> testRuns = testBuilder.getTestRuns(workbook);
+        List<TestRun> testRuns = testBuilder.getTestRuns(testDataSource);
         TestResults testResults = new TestResults();
 
         for (String browser : Config.getBrowsers()) {

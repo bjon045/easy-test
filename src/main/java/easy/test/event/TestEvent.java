@@ -39,7 +39,8 @@ public class TestEvent {
         }
 
         System.out.println("eventType: " + eventTypeToUse + ". target: " + targetToUse + ". iteration: " + iteration
-                + " data: " + dataRows.get(rowToProcess).getData());
+                + " using row: " + rowToProcess + " row count: " + dataRows.size() + " data: "
+                + dataRows.get(rowToProcess).getData());
 
         switch (eventTypeToUse) {
         case GO:

@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.ss.usermodel.Workbook;
 
 import easy.test.event.EventType;
 import easy.test.event.TestEvent;
 import easy.test.event.TestEventBlock;
 import easy.test.run.TestRun;
-import easy.test.util.WorkbookUtils;
+import easy.test.source.TestDataSource;
 
 public class TestBuilder {
 
-    public List<TestRun> getTestRuns(Workbook workbook) {
+    public List<TestRun> getTestRuns(TestDataSource testDataSource) {
         List<TestRun> testRuns = new ArrayList<TestRun>();
 
-        String[][] testRunsData = WorkbookUtils.getDataSet("testRuns", workbook);
+        String[][] testRunsData = testDataSource.getDataSet("testRuns");
         for (int i = 0; i < testRunsData.length; i++) {
             TestRun testRun = new TestRun();
             testRun.setRunNumber(i + 1);
@@ -40,7 +39,7 @@ public class TestBuilder {
                 testRun.add(testEventBlock);
 
                 String testRunName = Config.getValue(rawRunName); // run name after config lookup
-                String[][] eventBlock = WorkbookUtils.getDataSet(testRunName, workbook);
+                String[][] eventBlock = testDataSource.getDataSet(testRunName);
                 testEventBlock.setIterations(eventBlock.length - 2);
 
                 for (int y = 0; y < eventBlock[0].length; y++) {
